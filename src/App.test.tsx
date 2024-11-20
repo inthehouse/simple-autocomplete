@@ -1,9 +1,16 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
-import App from './App';
+import React, { act } from "react";
+import { createRoot } from "react-dom/client";
+import AutoComplete from "./components/AutoComplete/AutoComplete";
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+it("renders the AutoComplete component with an input field", async () => {
+  const div = document.createElement("div");
+  document.body.appendChild(div);
+
+  await act(async () => {
+    const root = createRoot(div);
+    root.render(<AutoComplete />);
+  });
+
+  const input = div.querySelector("[data-testid='input-box']");
+  expect(input).not.toBeNull();
 });

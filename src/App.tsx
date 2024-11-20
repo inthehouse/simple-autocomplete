@@ -1,26 +1,37 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Suspense } from 'react';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import './App.css';
+import About from './components/About/About';
+const LazyAutoComplete = React.lazy(() => import('./components/AutoComplete/AutoComplete'));
 
-function App() {
+const App: React.FC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className="app-container">
+        <nav className="app-nav">
+          <Link to="/" className="app-link">Search</Link>
+          <Link to="/about" className="app-link">About</Link>
+        </nav>
+
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <Suspense fallback={<div className="loading">Loading...</div>}>
+                <LazyAutoComplete />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/about"
+            element={
+              <About />
+            }
+          />
+        </Routes>
+      </div>
+    </Router>
   );
-}
+};
 
 export default App;
