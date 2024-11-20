@@ -1,10 +1,10 @@
 1. Difference Between Component and PureComponent
-Component: This updates whenever there is a change to its props and state in the shouldComponentUpdate lifecycle method and by default when the parent re-renders. 
-PureComponent: If nothing has changed, this component does not update. In the case that shouldComponentUpdate is added to this component, you will meet with an error.
+Component: This updates whenever there is a change to its props and state in the ```shouldComponentUpdate``` lifecycle method and by default when the parent re-renders. 
+PureComponent: If nothing has changed, this component does not update. In the case that ```shouldComponentUpdate``` is added to this component, you will meet with an error.
 Example where it might break your app: If your component relies on deeply nested objects or arrays, PureComponent might not detect changes because comparisons only check the reference, not the contents.
 
 2. Context + ShouldComponentUpdate might be dangerous. Why is that?
-shouldComponentUpdate only checks for changes in props or state. It doesn't know about updates from the context provider. If the context changes, but the shouldComponentUpdate blocks rendering, the component won't update even though it should.
+```shouldComponentUpdate``` only checks for changes in props or state. It doesn't know about updates from the context provider. If the context changes, but the ```shouldComponentUpdate``` blocks rendering, the component won't update even though it should.
 
 3. 3 Ways to Pass Information from a Child to a Parent
 Callback Functions: The parent passes a function to the child as a prop.
@@ -17,6 +17,7 @@ shouldComponentUpdate
 
 5. What is a fragment and why do we need it? Give an example where it might break my app.
 Fragments let you group a list of children elements without adding extra nodes to the DOM.
+```
 function FragmentDemo() {
   return (
     <React.Fragment>
@@ -25,26 +26,33 @@ function FragmentDemo() {
     </React.Fragment>
   );
 }
-In the case that the wrapping tags were a normal <div> the root would have an extra <div>.
+```
+In the case that the wrapping tags were a normal ```<div>``` the root would have an extra ```<div>```.
 This could break stylings in the case you have CSS that relies on the tags.
 
 6. Give 3 examples of the HOC pattern.
+```
 function withAuth(Component) {
   return function AuthenticatedComponent(props) {
     return isAuthenticated ? <Component {...props} /> : <Redirect to="/login" />;
   };
 }
+```
 
+```
 function withLogger(Component) {
   return function LoggedComponent(props) {
     return <Component {...props} />;
   };
 }
+```
+```
 const withTheme = (Component) => (props) => (
   <ThemeContext.Consumer>
     {(theme) => <Component {...props} theme={theme} />}
   </ThemeContext.Consumer>
 );
+```
 
 7. What's the difference in handling exceptions in promises,
 callbacks and async...await?
