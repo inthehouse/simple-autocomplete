@@ -1,13 +1,27 @@
 export const fetchUsers = async (query: string): Promise<any[]> => {
-    try {
-        const response = await fetch('https://jsonplaceholder.typicode.com/users');
-        const data = await response.json();
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => {
+        controller.abort();
+    }, 10000);
 
-        return data.filter((user: any) =>
-            user.name.toLowerCase().includes(query.toLowerCase())
-        );
-    } catch (error) {
-        console.error('Error fetching users:', error);
-        return [];
+    try {
+        const response = await fetch(`https://jsonplaceholder.typicode.com/users?name_like=${query}`, {
+            signal: controller.signal
+        });
+
+        if (!response.ok) {
+            throw new Error('Error fetching users');
+        }
+
+        const data = await response.json();
+        clearTimeout(timeoutId);
+        return data;
+    } catch (error: any) {
+        clearTimeout(timeoutId);
+        if (error.name === 'AbortError') {
+            throw new Error('Request timed out');
+        } else {
+            throw new Error(error.message || 'Error fetching users');
+        }
     }
 };

@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from 'react';
-
 import { useFetchUsers } from './hooks/useFetchUsers';
 import NamesList from './NamesList';
-
 import './AutoComplete.css';
 
 const AutoComplete: React.FC = () => {
     const [inputValue, setInputValue] = useState('');
     const [query, setQuery] = useState('');
-    const { suggestions, loading, error } = useFetchUsers(query);
+    const { suggestions, loading, error, isTimeout } = useFetchUsers(query);
 
     useEffect(() => {
         const handler = setTimeout(() => {
             if (inputValue.trim()) {
-                setQuery(inputValue); 
+                setQuery(inputValue);
+            } else {
+                setQuery('');
             }
         }, 500);
 
@@ -23,7 +23,7 @@ const AutoComplete: React.FC = () => {
     }, [inputValue]);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setInputValue(e.target.value); 
+        setInputValue(e.target.value);
     };
 
     return (
@@ -36,14 +36,18 @@ const AutoComplete: React.FC = () => {
                 placeholder="Search for users"
                 data-testid="input-box"
             />
-            <NamesList
-                suggestions={suggestions}
-                loading={loading}
-                error={error}
-                inputValue={inputValue}
-            />
+            {inputValue && (
+                <NamesList
+                    suggestions={suggestions}
+                    loading={loading}
+                    error={error}
+                    inputValue={inputValue}
+                    isTimeout={isTimeout}
+                />
+            )}
         </div>
     );
 };
+
 
 export default AutoComplete;
