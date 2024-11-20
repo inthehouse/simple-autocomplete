@@ -7,6 +7,9 @@ export const useFetchUsers = (query: string) => {
     const [error, setError] = useState<string>('');
     const [isTimeout, setIsTimeout] = useState(false);
     const [requestInitiated, setRequestInitiated] = useState(false);
+    
+    // NOTE: added this just to stop the first input to give a "no results" error (this is a shortcut)
+    const [requestCompleted, setRequestCompleted] = useState(false);
 
     useEffect(() => {
         if (query.trim()) {
@@ -19,9 +22,11 @@ export const useFetchUsers = (query: string) => {
                 .then((data) => {
                     setSuggestions(data);
                     setLoading(false);
+                    setRequestCompleted(true);
                 })
                 .catch((err) => {
                     setLoading(false);
+                    setRequestCompleted(true);
                     if (err.message === 'Request timed out') {
                         setIsTimeout(true);
                         setError(err.message);
@@ -31,8 +36,9 @@ export const useFetchUsers = (query: string) => {
                 });
         } else {
             setSuggestions([]);
+            setRequestCompleted(false);
         }
     }, [query]);
 
-    return { suggestions, loading, error, isTimeout, requestInitiated };
+    return { suggestions, loading, error, isTimeout, requestInitiated, requestCompleted };
 };

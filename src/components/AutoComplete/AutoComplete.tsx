@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useFetchUsers } from './hooks/useFetchUsers';
 import NamesList from './NamesList';
+
 import './AutoComplete.css';
 
 const AutoComplete: React.FC = () => {
     const [inputValue, setInputValue] = useState('');
     const [query, setQuery] = useState('');
-    const { suggestions, loading, error, isTimeout } = useFetchUsers(query);
+    const { suggestions, loading, error, isTimeout, requestCompleted } = useFetchUsers(query);
 
     useEffect(() => {
         const handler = setTimeout(() => {
@@ -38,6 +39,7 @@ const AutoComplete: React.FC = () => {
             />
             {inputValue && (
                 <NamesList
+                    requestCompleted={requestCompleted}
                     suggestions={suggestions}
                     loading={loading}
                     error={error}

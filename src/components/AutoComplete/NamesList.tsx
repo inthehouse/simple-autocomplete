@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Name } from './types';
 
 interface NamesListProps {
@@ -7,25 +7,16 @@ interface NamesListProps {
     error: string;
     inputValue: string;
     isTimeout: boolean;
+    requestCompleted: boolean;
 }
 
 const NamesList: React.FC<NamesListProps> = ({
     suggestions,
     loading,
     error,
-    inputValue,
     isTimeout,
+    requestCompleted,
 }) => {
-    const [hasSearched, setHasSearched] = useState(false);
-
-    useEffect(() => {
-        if (inputValue.trim()) {
-            setHasSearched(true);
-        } else {
-            setHasSearched(false);
-        }
-    }, [inputValue]);
-
     if (loading) {
         return <li className="autocomplete-loading">Loading...</li>;
     }
@@ -38,7 +29,7 @@ const NamesList: React.FC<NamesListProps> = ({
         return <li className="autocomplete-error">Error: {error}</li>;
     }
 
-    if (hasSearched && suggestions.length === 0) {
+    if (requestCompleted && suggestions.length === 0) {
         return <li className="autocomplete-no-results">No results found</li>;
     }
 
