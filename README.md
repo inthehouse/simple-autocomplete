@@ -23,6 +23,9 @@ cd deel
 npm install
 npm start
 ```
+```
+hint: try searching for the name Leanne for a sure result.
+```
 ### 3. Test
 ```
 npm test
