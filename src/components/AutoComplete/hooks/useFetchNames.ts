@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
-import { fetchUsers } from '../../../services/api';
+import { fetchNames } from '../../../services/api';
 
-export const useFetchUsers = (query: string) => {
+export const useFetchNames = (query: string) => {
     const [suggestions, setSuggestions] = useState<any[]>([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string>('');
@@ -18,7 +18,7 @@ export const useFetchUsers = (query: string) => {
             setIsTimeout(false);
             setRequestInitiated(true);
 
-            fetchUsers(query)
+            fetchNames(query)
                 .then((data) => {
                     setSuggestions(data);
                     setLoading(false);

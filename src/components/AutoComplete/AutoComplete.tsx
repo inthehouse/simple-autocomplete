@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useFetchUsers } from './hooks/useFetchUsers';
+import { useFetchNames } from './hooks/useFetchNames';
 import NamesList from './NamesList';
 
 import './AutoComplete.css';
@@ -7,7 +7,7 @@ import './AutoComplete.css';
 const AutoComplete: React.FC = () => {
     const [inputValue, setInputValue] = useState('');
     const [query, setQuery] = useState('');
-    const { suggestions, loading, error, isTimeout, requestCompleted } = useFetchUsers(query);
+    const { suggestions, loading, error, isTimeout, requestCompleted } = useFetchNames(query);
 
     useEffect(() => {
         const handler = setTimeout(() => {
@@ -16,7 +16,7 @@ const AutoComplete: React.FC = () => {
             } else {
                 setQuery('');
             }
-        }, 500);
+        }, 250);
 
         return () => {
             clearTimeout(handler);

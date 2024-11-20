@@ -1,4 +1,6 @@
-export const fetchUsers = async (query: string): Promise<any[]> => {
+import { Name } from "../components/AutoComplete/types";
+
+export const fetchNames = async (query: string): Promise<Name[]> => {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => {
         controller.abort();
@@ -6,14 +8,14 @@ export const fetchUsers = async (query: string): Promise<any[]> => {
 
     try {
         const response = await fetch(`https://jsonplaceholder.typicode.com/users?name_like=${query}`, {
-            signal: controller.signal
+            signal: controller.signal,
         });
 
         if (!response.ok) {
             throw new Error('Error fetching users');
         }
 
-        const data = await response.json();
+        const data: Name[] = await response.json();
         clearTimeout(timeoutId);
         return data;
     } catch (error: any) {
