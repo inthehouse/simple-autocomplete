@@ -7,9 +7,9 @@
 - ```shouldComponentUpdate``` only checks for changes in props or state. It doesn't know about updates from the context provider. If the context changes, but the ```shouldComponentUpdate``` blocks rendering, the component won't update even though it should.
 
 ### 3. 3 Ways to Pass Information from a Child to a Parent
-Callback Functions: The parent passes a function to the child as a prop.
-Context: Create a context for shared state.
-Shared State: Manage state in parent and pass down from parent to child.
+- Callback Functions: The parent passes a function to the child as a prop.
+- Context: Create a context for shared state.
+- Shared State: Manage state in parent and pass down from parent to child.
 
 ### 4. 2 Ways to Prevent Components from Re-Rendering
 use React.Memo
