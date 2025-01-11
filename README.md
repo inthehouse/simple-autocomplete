@@ -15,7 +15,7 @@ This project implements an **AutoComplete** feature in **React**, designed to pr
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/inthehouse/deel.git
+git clone https://github.com/inthehouse/simple-autocomplete.git
 cd deel
 ```
 ### 2. Install and run
